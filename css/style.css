@@ -1,0 +1,47 @@
+html{
+	height:100%;
+}
+body{
+	height: 100%;
+	background-color: #eee;
+}
+.side-nav{
+	z-index:2000;
+}
+.list_gallery{
+	width:100%;
+	height: 200px;
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.full-size{
+	width: 100%;
+	height: 100%;
+}
+.gflores{
+	background-color: #c2000b !important;
+}
+.gflores-text{
+	color: #c2000b !important;
+}
+.gflores *{
+	color:#FFF !important;
+}
+.gflores input{
+	border-color:#FFF;
+}
+.btn-custom-color{
+	background-color:#ffebee;
+	color:#000 !important;
+}
+.btn-custom-color:hover{
+	background-color:#ffebee;
+}
+.btn-custom-color1{
+	background-color:#c2000b;
+	color:#fff !important;
+}
+.btn-custom-color1:hover{
+	background-color:#c2000b;
+}

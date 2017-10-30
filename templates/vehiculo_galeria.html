@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    </head>
+
+    <body>
+      
+      <nav>
+        <div class="nav-wrapper gflores">
+          <ul>
+            <a href="#" class="brand-logo center">Galer&iacute;a</a>
+            <li><a href="vehiculos.php?l=vehiculos&valr=@@CATID@@" class="tooltipped" data-position="right" data-delay="50" data-tooltip="Regresar a CATEGORIAS y VEHICULOS"><i class="material-icons" style="transform:rotate(45deg)">call_received</i></a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="row">
+        <div class="col s12">
+          <div class="progress gflores" id="loading" style="display:none">
+              <div class="indeterminate" style="background-color:#FFF !important"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LISTA FOTOS -->
+      <div class="row" id="fotosList"></div>
+
+      <!--MODAL CONFIM DELETE-->
+      <div id="deleteModal" class="modal" style="max-width:320px;">
+        <div class="modal-content">
+          <h5 style="text-align:center">Eliminar</h5>
+          <p style="text-align:center">&iquest;Desea eliminar esta imagen?</p>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat" id="confirmDeleteFoto">Si</a>
+          <a href="#!" class="modal-action modal-close waves-effect waves-light btn btn-custom-color1" style="margin-right:10px;">No</a>
+        </div>
+      </div>
+
+      <!--BOTON PARA AGREGAR FOTO-->
+      <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large waves-effect waves-light red gflores tooltipped" data-tooltip="Agregar imagen" data-delay="50" data-position="left" id="addPicture"><i class="material-icons">add</i></a>
+      </div>
+
+      <!--MODAL PARA AGREGAR UNA NUEVA FOTO-->
+      <div id="newFoto" class="modal modal-fixed-footer" style="max-height:300px;">
+        <div class="modal-content">
+          <h5 style="text-align:center" id="">Nueva imagen</h5>
+          <p style="text-align:center" id="">
+
+            <div class="row">
+              <form class="col s12"  enctype="multipart/form-data" method="POST" action="vehiculo_galeria.php?idcar=@@CARID@@&idcat=@@CATID@@" id="newFotoForm">
+                <div class="row">
+                  <div class="file-field input-field col s12">
+                    <div class="btn gflores">
+                      <span>Imagen (JPG/JPEG)</span>
+                      <input type="file" id="imagen" name="imagen">
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text">
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </p>
+        </div>
+        <div class="modal-footer">
+          <span class="gflores-text" style="text-align:center;font-size:18px;display:none;" id="newfotoError">El formulario contiene errores.</span>
+          <a href="#!" class=" waves-effect waves-light btn btn-custom-color1" style="margin-left:10px;" id="btnGuardarFoto">Guardar</a>
+          <a href="#!" class="modal-action modal-close waves-effect waves-light btn btn-custom-color1" id="cancelAddFoto">Cancelar</a>
+        </div>
+      </div>
+
+      <!--MODAL-->
+      <div id="globalModal" class="modal" style="max-width:320px;">
+        <div class="modal-content">
+          <h5 style="text-align:center" id="modalTitle"></h5>
+          <p style="text-align:center" id="modalMsg"></p>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-light btn btn-custom-color1" style="back">Ok</a>
+        </div>
+      </div>
+
+      <input type="hidden" id="idCar" value="@@CARID@@">
+      <input type="hidden" id="idCat" value="@@CATID@@">
+
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script type="text/javascript" src="js/config.js"></script>
+      <script type="text/javascript">
+      var idDelete = -1;
+      $(document).ready(function(){
+        $('.tooltipped').tooltip({delay: 50});
+        $("#addPicture").click(function(){
+          $("#newFoto").openModal();
+        });
+
+        $("#btnGuardarFoto").click(function(){
+          var error = 0;
+          if( $("#imagen").val().length > 0 ){
+            if( ($("#imagen").val().split('.').pop() !== "jpg" && $("#imagen").val().split('.').pop() !== "jpeg" && $("#imagen").val().split('.').pop() !== "JPG" && $("#imagen").val().split('.').pop() !== "JPEG") ) {
+              error++;
+            }
+          }
+          if(error===0){
+            $("#newFotoForm").submit();
+          } else {
+            $("#newfotoError").show();
+          }
+        });
+
+        $("#confirmDeleteFoto").click(function(){
+          deleteImage();console.log(1);
+        });
+        getPictures();
+      });
+
+      function showMessage(title, msg){
+        $("#modalTitle").html(title);
+        $("#modalMsg").html(msg);
+        $("#globalModal").openModal();
+      }
+
+      function getPictures(){
+        $("#loading").show(0);
+        $("#fotosList").html("");
+        var request = "get-car-gallery&idcar="+$("#idCar").val()+"&idcat="+$("#idCat").val();
+        $.getJSON( host+request, function( data ) {
+          $("#loading").hide(0);
+          var contentG = "";
+          if(data.length>0){
+            for(var i=0;i<data.length;i++){
+              contentG += '<div class="col s3" style="padding:10px;">';
+              contentG += '<div class="list_gallery" style="border-radius:5px; background-image:url(images/cars/'+data[i].url+')">';
+              contentG += '<a class="btn-floating gflores tooltipped" item-id="'+data[i].id+'" data-position="left" data-delay="50" onclick="confirmDelete(this)" data-tooltip="Eliminar imagen" style="float:right;right:10px;top:150px;"><i class="material-icons">delete</i></a>';
+              contentG += '</div></div>';
+            }
+            $("#fotosList").html(contentG);
+            $(".tooltipped").tooltip({delay:50});
+          } else {
+            $("#fotosList").html("");
+            Materialize.toast('No hay fotos en la galeria de este vehiculo.', 4000);
+          }
+        }).error(function(e) {
+          $("#loading").hide(0);
+        });
+      }//FIN getPictures
+
+      function confirmDelete(obj) {
+        idDelete = $(obj).attr("item-id");
+        $("#deleteModal").openModal();
+      }
+
+      function deleteImage(){console.log(2);
+        $("#loading").show(0);
+        var request = "delete-image&idimg="+idDelete;
+        $.getJSON( host+request, function( data ) {
+          console.log(JSON.stringify(data));
+          $("#loading").hide(0);
+          if(data.result===1){
+            showMessage("Aviso", "La imagen a sido eliminada.");
+          }
+          getPictures();
+        }).error(function(e) {
+          console.log(JSON.stringify(e));
+          $("#loading").hide(0);
+        });
+      }
+
+      @@SCRIPT@@
+      </script>
+    </body>
+  </html>

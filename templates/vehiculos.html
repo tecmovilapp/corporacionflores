@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <title>Vehiculos</title>
+      <!--Import Google Icon Font-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    </head>
+
+    <body>
+
+      @@MENU@@
+      <div class="row" style="margin:20px;">
+        <div class="col s12">
+          <h5 style="text-align:center;">Categorias y vehiculos</h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12">
+          <ul class="tabs" style="overflow-x:hidden;">
+            <li class="tab col s6">
+              <a href="#categorias">Categorias</a>
+            </li>
+            <li class="tab col s6" id="carsTab">
+              <a href="#vehiculos" id="btnCarsTab">Veh&iacute;culos</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col s12" id="categorias">
+          <ul class="collection with-header">
+            @@CATEGORIAS@@
+          </ul>
+          <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <a class="btn-floating btn-large waves-effect waves-light red gflores tooltipped" data-tooltip="Agregar categor&iacute;a" data-position="left" id="addCat"><i class="material-icons">add</i></a>
+          </div>
+        </div>
+
+        <div class="col s12" id="vehiculos">
+          <div class="row">
+            <div class="input-field col s12">
+              <select id="catSelect">
+                <option value="" disabled selected>Elije una categoria</option>
+                @@CATCAR@@
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col s12">
+              <div class="progress gflores" id="loading" style="display:none;">
+                <div class="indeterminate" style="background-color:#FFF !important"></div>
+              </div>
+              <ul class="collapsible popout" data-collapsible="accordion" id="carslist">
+                
+              </ul>
+            </div>
+          </div>
+          <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <a class="btn-floating btn-large waves-effect waves-light red gflores tooltipped" data-tooltip="Agregar veh&iacute;culo" data-position="left" id="addCar"><i class="material-icons">add</i></a>
+          </div>
+        </div>
+      </div>
+
+      <!--MODAL PARA EDITAR VEHICULO-->
+      <div id="editModalCar" class="modal modal-fixed-footer">
+        <div class="modal-content">
+          <h5 style="text-align:center" id="">Editar vehiculo</h5>
+          <p style="text-align:center" id="">
+
+            <div class="row">
+              <form class="col s12"  enctype="multipart/form-data" method="POST" action="vehiculos.php" id="editCarForm">
+                <input type="hidden" name="actions" value="veh">
+                <input type="hidden" id="editcarid" name="editcarid" value="">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="nombrecedit" placeholder="" name="nombrecedit" type="text" class="validate">
+                    <label for="nombrecedit">Nombre</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <select id="yearcedit" name="yearcedit">
+                      @@YEARS@@
+                    </select>
+                    <label>A&ntilde;o</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <select id="categoriacedit" name="categoriacedit">
+                      @@CATCAR@@
+                    </select>
+                    <label>Categor&iacute;a</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="file-field input-field col s12">
+                    <div class="btn gflores">
+                      <span>Imagen (JPG/JPEG)</span>
+                      <input type="file" name="imagencedit">
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <textarea id="descripcioncedit" placeholder="" name="descripcioncedit" class="materialize-textarea"></textarea>
+                    <label for="descripcioncedit">Descripci&oacute;n</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="pdfcedit" placeholder="" type="url" class="validate" name="pdfcedit">
+                    <label for="pdfcedit">Enlace del PDF</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="enlacecedit" placeholder="" type="url" class="validate" name="enlacecedit">
+                    <label for="enlacecedit">Enlace para compartir</label>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+
+          </p>
+        </div>
+        <div class="modal-footer">
+          <span class="gflores-text" style="text-align:center;font-size:18px;display:none;" id="editCarError">El formulario contiene errores.</span>
+          <a href="#!" class=" waves-effect waves-light btn btn-custom-color1" style="margin-left:10px;" id="btnGuardarEditCar">Guardar</a>
+          <a href="#!" class="modal-action modal-close waves-effect waves-light btn btn-custom-color1" id="cancelEditCar">Cancelar</a>
+        </div>
+      </div>
+
+      <!--MODAL CONFIRM DELETE CAR-->
+      <div id="deleteModalCar" class="modal" style="max-width:320px;">
+        <div class="modal-content">
+          <h5 style="text-align:center">Eliminar</h5>
+          <p style="text-align:center">&iquest;Desea eliminar este veh&iacute;culo?<br>Al eliminar el vehiculo tambien se eliminara la respectiva galer&iacute;a de imagenes.</p>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat" id="confirmDeleteCar">Si</a>
+          <a href="#!" class="modal-action modal-close waves-effect waves-light btn btn-custom-color1" style="margin-right:10px;">No</a>
+        </div>
+      </div>
+
+      <!--MODAL PARA AGREGAR NUEVO VEHICULO-->
+      <div id="newCar" class="modal modal-fixed-footer">
+        <div class="modal-content">
+          <h5 style="text-align:center" id="">Nuevo vehiculo</h5>
+          <p style="text-align:center" id="">
+
+            <div class="row">
+              <form class="col s12"  enctype="multipart/form-data" method="POST" action="vehiculos.php" id="newCarForm">
+                <input type="hidden" name="actions" value="veh">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="nombrec" name="nombrec" type="text" class="validate">
+                    <label for="nombrec">Nombre</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <select id="yearc" name="yearc">
+                      <option value="" disabled selected>Elije el A&ntilde;o</option>
+                      @@YEARS@@
+                    </select>
+                    <label>A&ntilde;o</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <select id="categoriac" name="categoriac">
+                      <option value="" disabled selected>Elije una categoria</option>
+                      @@CATCAR@@
+                    </select>
+                    <label>Categor&iacute;a</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="file-field input-field col s12">
+                    <div class="btn gflores">
+                      <span>Imagen (JPG/JPEG)</span>
+                      <input type="file" id="imagenc" name="imagenc">
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <textarea id="descripcionc" name="descripcionc" class="materialize-textarea"></textarea>
+                    <label for="descripcionc">Descripci&oacute;n</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="pdfc" type="url" class="validate" name="pdfc">
+                    <label for="pdfc">Enlace del PDF</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="enlacec" type="url" class="validate" name="enlacec">
+                    <label for="enlacec">Enlace para compartir</label>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+
+          </p>
+        </div>
+        <div class="modal-footer">
+          <span class="gflores-text" style="text-align:center;font-size:18px;display:none;" id="newCarError">El formulario contiene errores.</span>
+          <a href="#!" class=" waves-effect waves-light btn btn-custom-color1" style="margin-left:10px;" id="btnGuardarCar">Guardar</a>
+          <a href="#!" class="modal-action modal-close waves-effect waves-light btn btn-custom-color1" id="cancelAddCar">Cancelar</a>
+        </div>
+      </div>
+
+      <!--MODAL PARA EDITAR CATEGORIA-->
+      <div id="editCat" class="modal modal-fixed-footer" style="max-height:300px;">
+        <div class="modal-content">
+          <h5 style="text-align:center" id="">Editar categor&iacute;a</h5>
+          <p style="text-align:center" id="">
+
+            <div class="row">
+              <form class="col s12"  enctype="multipart/form-data" method="POST" action="vehiculos.php" id="editCatForm">
+                <input id="" name="actions" type="hidden" class="validate" value="cat">
+                <input id="editcatid" name="editcatid" type="hidden" class="validate">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="nombreEdit" placeholder="" name="nombreedit" type="text" class="validate">
+                    <label for="nombreEdit">Nombre de la categoria</label>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </p>
+        </div>
+        <div class="modal-footer">
+          <span class="gflores-text" style="text-align:center;font-size:18px;display:none;" id="editCatError">El formulario contiene errores.</span>
+          <a href="#!" class=" waves-effect waves-light btn btn-custom-color1" style="margin-left:10px;" id="btnGuardarEditCat">Guardar</a>
+          <a href="#!" class="modal-action modal-close waves-effect waves-light btn btn-custom-color1" id="cancelAddCat">Cancelar</a>
+        </div>
+      </div>
+
+      <!--MODAL PARA AGREGAR NUEVA CATEGORIA-->
+      <div id="newCat" class="modal modal-fixed-footer" style="max-height:300px;">
+        <div class="modal-content">
+          <h5 style="text-align:center" id="">Nueva categor&iacute;a</h5>
+          <div class="row">
+              <form class="col s12"  enctype="multipart/form-data" method="POST" action="vehiculos.php" id="newCatForm">
+                <input id="" name="actions" type="hidden" class="validate" value="cat">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="nombre" name="nombre" type="text" class="validate">
+                    <label for="nombre">Nombre de la categoria</label>
+                  </div>
+                </div>
+              </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <span class="gflores-text" style="text-align:center;font-size:18px;display:none;" id="newCatError">El formulario contiene errores.</span>
+          <a href="#!" class=" waves-effect waves-light btn btn-custom-color1" style="margin-left:10px;" id="btnGuardarCat">Guardar</a>
+          <a href="#!" class="modal-action modal-close waves-effect waves-light btn btn-custom-color1" id="cancelAddCat">Cancelar</a>
+        </div>
+      </div>
+
+      <!--MODAL-->
+      <div id="globalModal" class="modal" style="max-width:320px;">
+        <div class="modal-content">
+          <h5 style="text-align:center" id="modalTitle"></h5>
+          <p style="text-align:center" id="modalMsg"></p>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-light btn btn-custom-color1" style="back">Ok</a>
+        </div>
+      </div>
+
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script type="text/javascript" src="js/config.js"></script>
+      <script type="text/javascript" src="js/vehiculos.js"></script>
+      <script type="text/javascript">
+      $(document).ready(function(){
+        @@SCRIPT@@
+      });
+      </script>
+    </body>
+  </html>

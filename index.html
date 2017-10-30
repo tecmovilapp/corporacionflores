@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+
+      <div class="valign-wrapper full-size">
+        <div class="valign" style="width:320px;margin:auto;">
+
+          <div class="row z-depth-2 gflores">
+            <form class="col s12">
+              <div class="row" style="margin-bottom:0px;margin-top:10px;">
+                <div class="col s12">
+                  <img src="images/corporacionflores.png" alt="" style="width:100%">
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="user" type="text" class="validate" value="">
+                  <label for="user">Usuario</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="password" type="password" class="validate" value="">
+                  <label for="password">Contrase&ntilde;a</label>
+                </div>
+              </div>
+              <div class="row" id="btnLogin">
+                <div class="col s12 align-right">
+                  <a class="waves-effect waves-red btn btn-custom-color" style="width:100%" id="login">Entrar</a>
+                </div>
+              </div>
+
+              <div class="progress gflores" id="loading" style="display:none">
+                  <div class="indeterminate" style="background-color:#FFF !important"></div>
+              </div>
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+
+      <!--MODAL-->
+      <div id="errorL" class="modal">
+        <div class="modal-content">
+          <h5 style="text-align:center">ERROR</h5>
+          <p style="text-align:center">El usuario y/o contrase&ntilde;a son incorrectos.</p>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-light btn btn-custom-color1" style="back">Ok</a>
+        </div>
+      </div>
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script type="text/javascript" src="js/config.js"></script>
+      <script type="text/javascript">
+        $(document).ready(function(){
+          $("#login").click(function(){
+            $("#btnLogin").hide(0);
+            $("#loading").show(0);
+            doLogin();
+          });
+          
+          //VERIFICAMOS SI EXISTE SESSION
+          $("#btnLogin").hide(0);
+          $("#loading").show(0);
+          var request = "check-session"
+          $.getJSON( host+request, function( data ) {
+            if(data.result===1){
+             window.location ="main.php"
+            }
+            $("#btnLogin").show(0);
+            $("#loading").hide(0);
+          }).error(function() { 
+            $("#btnLogin").show(0);
+            $("#loading").hide(0);
+          });
+
+        });// DOCUMENT READY
+
+        function doLogin(){
+          var request = "do-login&user="+$("#user").val()+"&pass="+$("#password").val();
+          $.getJSON( host+request, function( data ) {
+            if(data.result===1){
+             window.location ="main.php"
+            } else {
+              $('#errorL').openModal();
+            }
+            $("#btnLogin").show(0);
+            $("#loading").hide(0);
+          }).error(function() { 
+            $("#btnLogin").show(0);
+            $("#loading").hide(0);
+          });
+        }//FIN doLogin
+      </script>
+    </body>
+  </html>

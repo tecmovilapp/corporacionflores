@@ -1,0 +1,3 @@
+//var host = "http://127.0.0.1/apps/ionic1.7/corporacionflores/SERVER/api_server_flores.php?appId=f87be42e48579e1d6fb8103fa556b869&action=";
+//var host = "http://www.yourappland.com/applications/corporacionflores/api_server_flores.php?appId=f87be42e48579e1d6fb8103fa556b869&action=";
+var host = "http://localhost/corporacionflores/api_server_flores.php?appId=f87be42e48579e1d6fb8103fa556b869&action=";

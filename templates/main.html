@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    </head>
+
+    <body>
+
+      @@MENU@@
+
+      <div class="row">
+        <div class="col s12">
+          <h5 style="text-align:center;">Promociones</h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12">
+          <ul class="collapsible popout" data-collapsible="accordion">
+            @@PROMOS@@
+          </ul>
+        </div>
+      </div>
+
+      <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large waves-effect waves-light red gflores" id="addPromo"><i class="material-icons">add</i></a>
+      </div>
+
+      <!--MODAL PARA EDITAR PROMOCION-->
+      <div id="editPromo" class="modal modal-fixed-footer">
+        <div class="modal-content">
+          <h5 style="text-align:center" id="">Editar promocion</h5>
+          <p style="text-align:center" id="">
+
+            <div class="row">
+              <form class="col s12"  enctype="multipart/form-data" method="POST" action="main.php" id="editPromoForm">
+                <input type="hidden" name="editpromoid" id="editpromoid"/>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input placeholder="" id="tituloedit" name="tituloedit" type="text" class="validate">
+                    <label for="tituloedit">Titulo</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <textarea placeholder="" id="contenidoedit" name="contenidoedit" class="materialize-textarea"></textarea>
+                    <label for="contenidoedit">Contenido</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="file-field input-field col s12">
+                    <div class="btn gflores">
+                      <span>Imagen</span>
+                      <input type="file" id="imagenedit" name="imagenedit">
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input placeholder="" id="enlaceedit" type="url" class="validate" name="urledit">
+                    <label for="enlaceedit">Enlace</label>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+
+          </p>
+        </div>
+        <div class="modal-footer">
+          <span class="gflores-text" style="text-align:center;font-size:18px;display:none;" id="editPromoError">El formulario contiene errores.</span>
+          <a href="#!" class=" waves-effect waves-light btn btn-custom-color1" style="margin-left:10px;" id="btnGuardarPromoEdit">Guardar</a>
+          <a href="#!" class="modal-action modal-close waves-effect waves-light btn btn-custom-color1" id="cancelEditPromo">Cancelar</a>
+        </div>
+      </div>
+      
+      <!--MODAL PARA AGREGAR NUEVA PROMOCION-->
+      <div id="newPromo" class="modal modal-fixed-footer">
+        <div class="modal-content">
+          <h5 style="text-align:center" id="">Nueva promocion</h5>
+          <p style="text-align:center" id="">
+
+            <div class="row">
+              <form class="col s12"  enctype="multipart/form-data" method="POST" action="main.php" id="newPromoForm">
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="titulo" name="titulo" type="text" class="validate">
+                    <label for="titulo">Titulo</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <textarea id="contenido" name="contenido" class="materialize-textarea"></textarea>
+                    <label for="contenido">Contenido</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="file-field input-field col s12">
+                    <div class="btn gflores">
+                      <span>Imagen</span>
+                      <input type="file" id="imagen" name="imagen">
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="enlace" type="url" class="validate" name="url">
+                    <label for="enlace">Enlace</label>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+
+          </p>
+        </div>
+        <div class="modal-footer">
+          <span class="gflores-text" style="text-align:center;font-size:18px;display:none;" id="newPromoError">El formulario contiene errores.</span>
+          <a href="#!" class=" waves-effect waves-light btn btn-custom-color1" style="margin-left:10px;" id="btnGuardarPromo">Guardar</a>
+          <a href="#!" class="modal-action modal-close waves-effect waves-light btn btn-custom-color1" id="cancelAddPromo">Cancelar</a>
+        </div>
+      </div>
+
+<!--MODAL-->
+      <div id="globalModal" class="modal" style="max-width:320px;">
+        <div class="modal-content">
+          <h5 style="text-align:center" id="modalTitle"></h5>
+          <p style="text-align:center" id="modalMsg"></p>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-light btn btn-custom-color1">Ok</a>
+        </div>
+      </div>
+
+      <!--MODAL CONFIM DELETE-->
+      <div id="deleteModal" class="modal" style="max-width:320px;">
+        <div class="modal-content">
+          <h5 style="text-align:center">Eliminar</h5>
+          <p style="text-align:center">&iquest;Desea eliminar esta promocion?</p>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat" id="confirmDeletePromo">Si</a>
+          <a href="#!" class="modal-action modal-close waves-effect waves-light btn btn-custom-color1" style="margin-right:10px;">No</a>
+        </div>
+      </div>
+
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script type="text/javascript" src="js/config.js"></script>
+      <script type="text/javascript">
+        $(document).ready(function(){
+          var idDelete = 0;
+          $(".button-collapse").sideNav();
+          $("#addPromo").click(function(){
+            $("#newPromo").openModal();
+          });
+
+          $(".btnEditPromo").click(function(){
+            var edit = $(this).attr("edit-id");
+            $("#editpromoid").val(edit);
+            $("#tituloedit").val($("#editTitulo"+edit).html());
+            $("#contenidoedit").val($("#editContenido"+edit).html());
+            $("#enlaceedit").val($("#editUrl"+edit).html());
+            $("#editPromo").openModal();
+          });
+
+          $("#btnGuardarPromoEdit").click(function(){
+            var error = 0;
+            if($("#tituloedit").val().length<1){
+              error++;
+            }
+            if($("#contenidoedit").val().length<1){
+              error++;
+            }
+            if( $("#imagenedit").val().length > 0 ){
+              if( ($("#imagenedit").val().split('.').pop() !== "jpg" && $("#imagenedit").val().split('.').pop() !== "jpeg" && $("#imagenedit").val().split('.').pop() !== "JPG" && $("#imagenedit").val().split('.').pop() !== "JPEG") ) {
+                error++;
+              }
+            }
+            if($("#enlaceedit").val().length<1){
+              error++;
+            }
+
+            if(error===0){
+              $("#editPromoForm").submit();
+            } else {
+              $("#editPromoError").show();
+            }
+          });
+
+          $("#btnGuardarPromo").click(function(){
+            var error = 0;
+            if($("#titulo").val().length<1){
+              error++;
+            }
+            if($("#contenido").val().length<1){
+              error++;
+            }
+            if($("#imagen").val().split('.').pop() !== "jpg" && $("#imagen").val().split('.').pop() !== "jpeg" && $("#imagen").val().split('.').pop() !== "JPG" && $("#imagen").val().split('.').pop() !== "JPEG") {
+              error++;
+            }
+            if($("#enlace").val().length<1){
+              error++;
+            }
+
+            if(error===0){
+              $("#newPromoForm").submit();
+            } else {
+              $("#newPromoError").show();
+            }
+          });
+
+          $("input").focus(function(){
+            $("#newPromoError").hide(0);
+          });
+          $(".deletePromo").click(function(){
+            idDelete = $(this).attr("item-id");
+            $("#deleteModal").openModal();
+          });
+
+          $("#confirmDeletePromo").click(function(){
+            $("#deletePromoForm"+idDelete).submit();
+          });
+          @@SCRIPT@@
+        });
+
+        function showMessage(title, msg){
+          $("#modalTitle").html(title);
+          $("#modalMsg").html(msg);
+          $("#globalModal").openModal();
+        }
+      </script>
+    </body>
+  </html>

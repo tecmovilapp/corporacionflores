@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    </head>
+
+    <body>
+
+      @@MENU@@
+      <div class="row">
+        <div class="col s12">
+          <h5 style="text-align:center;">Ubicaciones de agencias donde pagar</h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12">
+          <ul class="collapsible popout" data-collapsible="accordion">
+            @@LOCATIONS@@
+          </ul>
+        </div>
+      </div>
+
+       <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large waves-effect waves-light red gflores" id="addLocationp"><i class="material-icons">add</i></a>
+      </div>
+
+      <!--MODAL PARA EDITAR Ubicacion pagos-->
+      <div id="editLocationp" class="modal modal-fixed-footer">
+        <div class="modal-content">
+          <h5 style="text-align:center" id="">Editar ubicaci&oacute;n</h5>
+          <p style="text-align:center">
+            <div class="row">
+              <form class="col s12"  enctype="multipart/form-data" method="POST" action="pagos_locations.php" id="editLocationpForm">
+                <input type="hidden" name="editlocationpid" id="editlocationpid"/>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input placeholder="" id="nombreedit" name="nombrelpedit" type="text" class="validate">
+                    <label for="nombreedit">Nombre</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <textarea placeholder="" id="direccionedit" name="direccionedit" class="materialize-textarea"></textarea>
+                    <label for="direccionedit">Direccion</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="file-field input-field col s12">
+                    <div class="btn gflores">
+                      <span>Imagen (300x300PX)</span>
+                      <input type="file" id="imagenedit" name="imagenedit">
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text">
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="urledit" placeholder="" type="url" class="validate" name="urledit">
+                    <label for="urledit">Enlace</label>
+                  </div>
+                </div>
+                <!--
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="telefonoedit" placeholder="" type="tel" class="validate" name="telefonoedit">
+                    <label for="telefonoedit">Telefono (Sin guiones ni espacios)</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input id="latitudedit" placeholder="" type="number" step="0.000001" class="validate" name="latitudedit">
+                    <label for="latitudedit">Latitud</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="longitudedit" placeholder="" type="number" step="0.000001" class="validate" name="longitudedit">
+                    <label for="longitudedit">Longitud</label>
+                  </div>
+                </div>
+                @@HELPCOOR@@
+              -->
+              </form>
+            </div>
+
+          </p>
+        </div>
+        <div class="modal-footer">
+          <span class="gflores-text" style="text-align:center;font-size:18px;display:none;" id="editLocationpError">El formulario contiene errores.</span>
+          <a href="#!" class=" waves-effect waves-light btn btn-custom-color1" style="margin-left:10px;" id="btnGuardarLocationpEdit">Guardar</a>
+          <a href="#!" class="modal-action modal-close waves-effect waves-light btn btn-custom-color1" id="cancelLocationpEdit">Cancelar</a>
+        </div>
+      </div>
+
+
+      <!--MODAL PARA AGREGAR NUEVA PROMOCION-->
+      <div id="newLocationp" class="modal modal-fixed-footer">
+        <div class="modal-content">
+          <h5 style="text-align:center" id="">Nueva ubicaci&oacute;n</h5>
+          <p style="text-align:center" id="">
+            <div class="row">
+              <form class="col s12"  enctype="multipart/form-data" method="POST" action="pagos_locations.php" id="newLocationpForm">
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="nombre" name="nombrelp" type="text" class="validate">
+                    <label for="nombre">Nombre</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <textarea id="direccion" name="direccion" class="materialize-textarea"></textarea>
+                    <label for="direccion">Direcci&oacute;n</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="file-field input-field col s12">
+                    <div class="btn gflores">
+                      <span>Imagen (300x300PX)</span>
+                      <input type="file" id="imagen" name="imagen">
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="url" type="url" class="validate" name="url">
+                    <label for="url">Enlace</label>
+                  </div>
+                </div>
+                <!--
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="telefono" type="tel" class="validate" name="telefono">
+                    <label for="telefono">Telefono (Sin guiones ni espacios)</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input id="latitud" type="number" step="0.000001" class="validate" name="latitud">
+                    <label for="latitud">Latitud</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="longitud" type="number" step="0.000001" class="validate" name="longitud">
+                    <label for="longitud">Longitud</label>
+                  </div>
+                </div>
+                @@HELPCOOR@@
+              -->
+              </form>
+            </div>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <span class="gflores-text" style="text-align:center;font-size:18px;display:none;" id="newLocationpError">El formulario contiene errores.</span>
+          <a href="javascript:void(0)" class=" waves-effect waves-light btn btn-custom-color1" style="margin-left:10px;" id="btnGuardarLocationp">Guardar</a>
+          <a href="javascript:void(0)" class="modal-action modal-close waves-effect waves-light btn btn-custom-color1" id="cancelAddLocationp">Cancelar</a>
+        </div>
+      </div>
+
+       <!--MODAL CONFIM DELETE-->
+      <div id="deleteModal" class="modal" style="max-width:320px;">
+        <div class="modal-content">
+          <h5 style="text-align:center">Eliminar</h5>
+          <p style="text-align:center">&iquest;Desea eliminar esta ubicaci&oacute;n?</p>
+        </div>
+        <div class="modal-footer">
+          <a href="javascript:void(0)" class="modal-action modal-close waves-effect waves-light btn-flat" id="confirmDeleteLocationp">Si</a>
+          <a href="javascript:void(0)" class="modal-action modal-close waves-effect waves-light btn btn-custom-color1" style="margin-right:10px;">No</a>
+        </div>
+      </div>
+
+      <!--MODAL-->
+      <div id="globalModal" class="modal" style="max-width:320px;">
+        <div class="modal-content">
+          <h5 style="text-align:center" id="modalTitle"></h5>
+          <p style="text-align:center" id="modalMsg"></p>
+        </div>
+        <div class="modal-footer">
+          <a href="javascript:void(0)" class=" modal-action modal-close waves-effect waves-light btn btn-custom-color1" style="back">Ok</a>
+        </div>
+      </div>
+
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script type="text/javascript" src="js/config.js"></script>
+      <script type="text/javascript" src="js/pagos_locations.js"></script>
+      <script type="text/javascript">
+      @@SCRIPT@@
+      </script>
+    </body>
+  </html>

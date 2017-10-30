@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+      <link href="css/materialNote.css" rel="stylesheet">
+      <link href="css/codeMirror/codemirror.css" rel="stylesheet">
+      <link href="css/codeMirror/monokai.css" rel="stylesheet">
+      <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
+
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    </head>
+
+    <body>
+
+      @@MENU@@
+      <div class="row">
+        <div class="col s12">
+          <h5 style="text-align:center;">Configuraciones</h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12">
+          <ul class="tabs gflores-text" style="overflow-x:hidden;">
+            <li class="tab col s2"><a href="#tab0" onclick="getInfoAppointment()">Citas</a></li>
+            <li class="tab col s2"><a href="#tab1" onclick="getInfoQuote()">Cotizaciones</a></li>
+            <li class="tab col s2"><a href="#tab2" onclick="getInfoContact()">Cont&aacute;ctanos</a></li>
+            <li class="tab col s2"><a href="#tab3" onclick="getInfoBAC()">Tarjetas BAC</a></li>
+            <li class="tab col s2"><a href="#tab4" onclick="getInfoAvance()">Avance Plus</a></li>
+            <li class="tab col s2"><a href="#tab5" onclick="getTypes()">Tipos</a></li>
+            <li class="tab col s2"><a href="#tab6" onclick="getWorkshops()">Talleres</a></li>
+            <li class="tab col s2"><a href="#tab7" onclick="getModels()">Modelos</a></li>
+          </ul>
+        </div>
+        <div id="tab0" class="col s12">
+          <div class="row" style="margin-top:20px;">
+              <div class="col s8">
+                <input id="" name="actions" type="hidden" class="validate" value="cat">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="emailappointment" placeholder="" type="email" class="validate">
+                    <label for="emailappointment">Corre electronico donde se recibir&aacute;n las citas de servicios.</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col s4">
+                <div class="waves-effect waves-light btn-large btn-custom-color1" style="margin-left:10px;width:100%;" onclick="updateInfoAppointment()">Actualizar</div>
+              </div>
+          </div>
+        </div><!--FIN TAB 0-->
+        <div id="tab1" class="col s12">
+          <div class="row" style="margin-top:20px;">
+              <div class="col s8">
+                <input id="" name="actions" type="hidden" class="validate" value="cat">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="emailquote" placeholder="" name="emailquote" type="email" class="validate">
+                    <label for="emailquote">Corre electronico donde se recibir&aacute;n las cotizaciones</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col s4">
+                <div class="waves-effect waves-light btn-large btn-custom-color1" style="margin-left:10px;width:100%;" onclick="updateInfoQuote()">Actualizar</div>
+              </div>
+            </div>
+        </div><!--FIN TAB 1-->
+        <div id="tab2" class="col s12">
+          <div class="row" style="margin-top:20px;">
+              <div class="col s12">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="emailcontact" placeholder="" name="emailcontact" type="email" class="validate">
+                    <label for="emailcontact">Corre electronico donde se recibir&aacute;n las consultas, quejas o reclamos.</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="phonecontact" placeholder="" name="phonecontact" type="number" class="validate">
+                    <label for="phonecontact">Telefono</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="chatcontact" placeholder="" name="chatcontact" type="url" class="validate">
+                    <label for="chatcontact">Link de chat</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col s12">
+                <div class="waves-effect waves-light btn btn-custom-color1" style="margin-left:10px;" onclick="updateInfoContact()">Actualizar</div>
+              </div>
+          </div>
+        </div><!--FIN TAB 2 -->
+        <div id="tab3" class="col s12">
+          <div class="row" style="margin-top:20px;">
+              <div class="col s12">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="emailbac" placeholder="" name="emailbac" type="email" class="validate">
+                    <label for="emailbac">Corre electronico donde se recibir&aacute;n las solicitudes de tarjetas BAC.</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="pdfbac" placeholder="" name="pdfbac" type="url" class="validate">
+                    <label for="pdfbac">PDF informativo</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12">
+                    <label for="editorbac">Contenido</label>
+                    <div class="editor" id="editorbac"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col s12">
+                <div class="waves-effect waves-light btn btn-custom-color1" style="margin-left:10px;" onclick="updateInfoBAC()">Actualizar</div>
+              </div>
+          </div>
+        </div> <!--FIN TAB 3-->
+        <div id="tab4" class="col s12">
+          <div class="row" style="margin-top:20px;">
+              <div class="col s12">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="emailavance" placeholder="" name="emailavance" type="email" class="validate">
+                    <label for="emailavance">Corre electronico donde se recibir&aacute;n las solicitudes de Avance PLUS.</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="pdfavance" placeholder="" name="pdfavance" type="url" class="validate">
+                    <label for="pdfbac">PDF informativo</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="videoavance" placeholder="" name="videoavance" type="url" class="validate">
+                    <label for="videoavance">Video informativo</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12">
+                    <label for="editoravance">Contenido</label>
+                    <div class="editor" id="editoravance"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col s12">
+                <div class="waves-effect waves-light btn btn-custom-color1" style="margin-left:10px;" onclick="updateInfoAvance()">Actualizar</div>
+              </div>
+          </div>
+        </div><!--FIN TAB 4 -->
+        <div id="tab5" class="col s12">
+          <ul class="collection with-header" id="listTypes">
+          </ul>
+          <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <a class="btn-floating btn-large waves-effect waves-light red gflores tooltipped" data-tooltip="Agregar" data-position="left" id="addType"><i class="material-icons">add</i></a>
+          </div>
+        </div>
+        <div id="tab6" class="col s12">
+          <ul class="collection with-header" id="listWorkshops">
+          </ul>
+          <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <a class="btn-floating btn-large waves-effect waves-light red gflores tooltipped" data-tooltip="Agregar" data-position="left" id="addWorkshop"><i class="material-icons">add</i></a>
+          </div>
+        </div>
+        <div id="tab7" class="col s12">
+          <ul class="collection with-header" id="listModels">
+          </ul>
+          <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <a class="btn-floating btn-large waves-effect waves-light red gflores tooltipped" data-tooltip="Agregar" data-position="left" id="addModel"><i class="material-icons">add</i></a>
+          </div>
+        </div>
+      </div>
+
+      <!--MODAL PARA AGREGAR NUEVO MODELO-->
+      <div id="newModel" class="modal modal-fixed-footer" style="max-height:300px;">
+        <div class="modal-content">
+          <h5 style="text-align:center" id="">Nuevo modelo</h5>
+          <div class="row">
+              <div class="col s12">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="nombrem" name="nombrem" type="text" class="validate">
+                    <label for="nombrem">Nombre</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <span class="gflores-text" style="text-align:center;font-size:18px;display:none;" id="newModelError">Error, debes indicar el nombre.</span>
+          <a href="javascript:void(0)" class="waves-effect waves-light btn btn-custom-color1" style="margin-left:10px;" id="btnGuardarModel">Guardar</a>
+          <a href="javascript:void(0)" class="modal-action modal-close waves-effect waves-light btn btn-custom-color1" id="cancelAddModel">Cancelar</a>
+        </div>
+      </div>
+
+      <!--MODAL CONFIRM DELETE MODELO-->
+      <div id="deleteModalModel" class="modal" style="max-width:320px;">
+        <div class="modal-content">
+          <h5 style="text-align:center">Eliminar</h5>
+          <p style="text-align:center">&iquest;Seguro que deseas eliminar este modelo?</p>
+        </div>
+        <div class="modal-footer">
+          <div class="modal-action modal-close waves-effect waves-light btn-flat" id="confirmDeleteModel">Si</div>
+          <div class="modal-action modal-close waves-effect waves-light btn btn-custom-color1" style="margin-right:10px;">No</div>
+        </div>
+      </div>
+
+
+      <!--MODAL PARA AGREGAR NUEVO TALLER-->
+      <div id="newWorkshop" class="modal modal-fixed-footer" style="max-height:300px;">
+        <div class="modal-content">
+          <h5 style="text-align:center" id="">Nuevo taller</h5>
+          <div class="row">
+              <div class="col s12">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="nombrew" name="nombrew" type="text" class="validate">
+                    <label for="nombrew">Nombre</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <span class="gflores-text" style="text-align:center;font-size:18px;display:none;" id="newWorkshopError">Error, debes indicar el nombre.</span>
+          <a href="javascript:void(0)" class="waves-effect waves-light btn btn-custom-color1" style="margin-left:10px;" id="btnGuardarWorkshop">Guardar</a>
+          <a href="javascript:void(0)" class="modal-action modal-close waves-effect waves-light btn btn-custom-color1" id="cancelAddWorkshop">Cancelar</a>
+        </div>
+      </div>
+
+      <!--MODAL CONFIRM DELETE TALLER-->
+      <div id="deleteModalWorkshop" class="modal" style="max-width:320px;">
+        <div class="modal-content">
+          <h5 style="text-align:center">Eliminar</h5>
+          <p style="text-align:center">&iquest;Seguro que deseas eliminar este taller?</p>
+        </div>
+        <div class="modal-footer">
+          <div class="modal-action modal-close waves-effect waves-light btn-flat" id="confirmDeleteWorkshop">Si</div>
+          <div class="modal-action modal-close waves-effect waves-light btn btn-custom-color1" style="margin-right:10px;">No</div>
+        </div>
+      </div>
+
+       <!--MODAL PARA AGREGAR NUEVO TIPO-->
+      <div id="newType" class="modal modal-fixed-footer" style="max-height:300px;">
+        <div class="modal-content">
+          <h5 style="text-align:center" id="">Nuevo tipo</h5>
+          <div class="row">
+              <div class="col s12">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="nombret" name="nombret" type="text" class="validate">
+                    <label for="nombret">Nombre</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <span class="gflores-text" style="text-align:center;font-size:18px;display:none;" id="newTypeError">Error, debes indicar el nombre.</span>
+          <a href="javascript:void(0)" class="waves-effect waves-light btn btn-custom-color1" style="margin-left:10px;" id="btnGuardarType">Guardar</a>
+          <a href="javascript:void(0)" class="modal-action modal-close waves-effect waves-light btn btn-custom-color1" id="cancelAddType">Cancelar</a>
+        </div>
+      </div>
+
+      <!--MODAL CONFIRM DELETE TYPE-->
+      <div id="deleteModalType" class="modal" style="max-width:320px;">
+        <div class="modal-content">
+          <h5 style="text-align:center">Eliminar</h5>
+          <p style="text-align:center">&iquest;Seguro que deseas eliminar este tipo?</p>
+        </div>
+        <div class="modal-footer">
+          <div class="modal-action modal-close waves-effect waves-light btn-flat" id="confirmDeleteType">Si</div>
+          <div class="modal-action modal-close waves-effect waves-light btn btn-custom-color1" style="margin-right:10px;">No</div>
+        </div>
+      </div>
+
+      <!--MODAL-->
+      <div id="globalModal" class="modal" style="max-width:320px;">
+        <div class="modal-content">
+          <h5 style="text-align:center" id="modalTitle"></h5>
+          <p style="text-align:center" id="modalMsg"></p>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-light btn btn-custom-color1" style="back">Ok</a>
+        </div>
+      </div>
+
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script type="text/javascript" src="js/ckMaterializeOverrides.js"></script>
+      <script type="text/javascript" src="lib/codeMirror/codemirror.js"></script>
+      <script type="text/javascript" src="lib/codeMirror/xml.js"></script>
+      <script type="text/javascript" src="js/materialNote.js"></script>
+
+      <script type="text/javascript" src="js/config.js"></script>
+      <script type="text/javascript" src="js/configurations.js"></script>
+      <script type="text/javascript">
+      $(document).ready(function(){
+        @@SCRIPT@@
+      });
+      </script>
+    </body>
+  </html>
