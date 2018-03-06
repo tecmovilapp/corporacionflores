@@ -69,7 +69,7 @@ $(document).ready(function(){
     }
 
     if($("#imagenc").val().split('.').pop() !== "jpg" && $("#imagenc").val().split('.').pop() !== "jpeg" && $("#imagenc").val().split('.').pop() !== "JPG" && $("#imagenc").val().split('.').pop() !== "JPEG") {
-      error++;
+      //error++;
     }
 
     if($("#yearc").val() === null){

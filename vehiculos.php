@@ -64,7 +64,7 @@ class vehiculos{
 				try {//ELIMINAMOS LA IMAGEN ANTERIOR
 					$this->deleteOldImage($_POST["editcarid"]);
 				} catch (Exception $e) {}
-				$imageRS = $this->resizeImg($dir_subida, $file_name, "rs_".$file_name, 1000, 1000);	
+				$imageRS = $this->resizeImg($dir_subida, $file_name, "rs_".$file_name, 400, 400);	
 				$stmt = $dbh->prepare("UPDATE vehiculos SET foto = :IMAGE WHERE id =:ID;");
 				$stmt->execute( array(":IMAGE"=>$imageRS, ":ID"=>$_POST["editcarid"]) );
 				
@@ -99,9 +99,17 @@ class vehiculos{
 		$fichero_subido = $dir_subida . $file_name;
 
 		if (move_uploaded_file($_FILES['imagenc']['tmp_name'], $fichero_subido)) {
-			$imageRS = $this->resizeImg($dir_subida, $file_name, "rs_".$file_name, 1000, 1000);	
-			$stmt = $dbh->prepare("INSERT INTO vehiculos VALUES(NULL, :NAME, :IMG, :DES, :YEAR, :PDF, :URL, :CAT);");
-			$stmt->execute( array(":NAME"=>utf8_encode($_POST["nombrec"]), ":IMG"=>$imageRS, ":DES"=>utf8_encode($_POST["descripcionc"]),":YEAR"=>$_POST["yearc"],":PDF"=>$_POST["pdfc"],":URL"=>$_POST["enlacec"], ":CAT"=>$_POST["categoriac"]) );
+			$imageRS = $this->resizeImg($dir_subida, $file_name, "rs_".$file_name, 400, 400);	
+			$stmt = $dbh->prepare("INSERT INTO vehiculos VALUES(NULL, :NAME, :IMG, :DES, :YEAR, :PDF, :URL, :CAT, :MOTOR, :PRECIO, :TRACCION, :COMBUSTIBLE, :TRANSMISION, :POTENCIA, :PASAJEROS, :VIDEO);");
+			$stmt->execute( array(":NAME"=>utf8_encode($_POST["nombrec"]), ":IMG"=>$imageRS, ":DES"=>utf8_encode($_POST["descripcionc"]),":YEAR"=>$_POST["yearc"],":PDF"=>$_POST["pdfc"],":URL"=>$_POST["enlacec"], ":CAT"=>$_POST["categoriac"], 
+			":MOTOR"=>$_POST["motorc"], 
+			":PRECIO"=>$_POST["precioc"],
+			":TRACCION"=>$_POST["traccionc"],
+			":COMBUSTIBLE"=>$_POST["combustiblec"],
+			":TRANSMISION"=>$_POST["transmisionc"],
+			":POTENCIA"=>$_POST["potenciac"],
+			":PASAJEROS"=>$_POST["pasajerosc"],
+			":VIDEO"=>$_POST["videoc"],) );
 			header("Location: vehiculos.php?l=vehiculos&valc=".$_POST["categoriac"]);
 		} else {
 			header("Location: vehiculos.php?l=vehiculos&valv=-1");

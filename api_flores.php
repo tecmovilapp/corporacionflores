@@ -10,9 +10,10 @@ class cflores{
 	
 	private $info;
 	//private $host = "http://www.yourappland.com/applications/corporacionflores/";
-	private $host = "http://localhost/corporacionflores/";
+	private $host = "http://10.0.2.2/corporacionflores/";
 	//private $host = "http://192.168.200.106/apps/ionic1.7/corporacionflores/";
-	private $hostImg = "http://www.yourappland.com/applications/corporacionflores/images/";
+	//private $hostImg = "http://www.yourappland.com/applications/corporacionflores/images/";
+	private $hostImg = "http://10.0.2.2/corporacionflores/images/";
 
 	function cflores(){
 		if( isset($_GET["appId"]) && $_GET["appId"]=="0d83420a189fab5cb7197dc431bae006" ){

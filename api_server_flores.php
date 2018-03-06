@@ -11,7 +11,8 @@ class scflores{
 	//private $host = "http://www.yourappland.com/applications/corporacionflores/";
 	private $host = "http://localhost/corporacionflores/";
 	//private $host = "http://localhost/apps/ionic1.7/corporacionflores/";
-	private $hostImg = "http://www.yourappland.com/applications/corporacionflores/images/";
+	//private $hostImg = "http://www.yourappland.com/applications/corporacionflores/images/";
+	private $hostImg = "http://localhost/corporacionflores/images/";
 
 	function scflores(){
 		if( isset($_GET["appId"]) && $_GET["appId"]=="f87be42e48579e1d6fb8103fa556b869" ){
